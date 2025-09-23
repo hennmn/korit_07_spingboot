@@ -21,12 +21,21 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	// Spring Data REST 의존성 추가 영역
+	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	// 여기에 기본적으로 Jackson 라이브러리 포함(JSON으로 바꿔주는 라이브러리)
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	runtimeOnly 'com.h2database:h2'
+
+//	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+	// 붙여넣고 버전 부분을 지우면 항상 최신은 것만 불러옴
 
 	implementation 'org.projectlombok:lombok:1.18.42'
 	annotationProcessor 'org.projectlombok:lombok:1.18.42'
+
+
 }
 
 tasks.named('test') {

@@ -17,9 +17,9 @@ public class CardatabaseApplication implements CommandLineRunner {
 	private static final Logger logger = LoggerFactory.getLogger(
 			CardatabaseApplication.class
 	);
-	// implements를 하면 run() 메서드를 반드시 구현해야 하는데 이거 예외를 던지려고 implements 하는게 아니라,
-	// 앱 시작시 실행할 코드를 넣기 위해 implements하는 거임
-	// 보통 초기 데이터 넣기, 간단한 테스트 로그 찍기 등에 사용
+	// CommandLineRunner를 implements를 하면 run() 메서드를 반드시 구현해야 하는데 이거 예외를 던지려고 implements 하는게 아니라,
+	// 애플리케이션이 시작되면, run(String... args) 메서드가 자동으로 호출
+	// 보통 초기 데이터 세팅, 테스트용 출력, DB 준비 같은 작업에 사용됩니다.
 
 	// 여기에 생성자 주입 부분 적겠습니다.(그리고 .md 파일로 옮기는 것도 함께 하겠습니다.)
 	private final CarRepository repository;  // DB 접근 기능을 쓸 수 있게 됨

@@ -19,14 +19,6 @@ public class Car {
     @JoinColumn(name = "owner")
     private Owner owner;
 
-    public Owner getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Owner owner) {
-        this.owner = owner;
-    }
-
     // JPA는 기본 생성자가 필수적으로 요구됩니다.
 //    public Car() {
 //    }

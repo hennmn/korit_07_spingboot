@@ -1,9 +1,6 @@
 package com.example.cardatabase;
 
-import com.example.cardatabase.domain.Car;
-import com.example.cardatabase.domain.CarRepository;
-import com.example.cardatabase.domain.Owner;
-import com.example.cardatabase.domain.OwnerRepository;
+import com.example.cardatabase.domain.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -24,12 +21,16 @@ public class CardatabaseApplication implements CommandLineRunner {
 	// 여기에 생성자 주입 부분 적겠습니다.(그리고 .md 파일로 옮기는 것도 함께 하겠습니다.)
 	private final CarRepository repository;  // DB 접근 기능을 쓸 수 있게 됨
 	private final OwnerRepository ownerRepository;
+	private final AppUserRepository userRepository;
 
 
-    public CardatabaseApplication(CarRepository repository, OwnerRepository ownerRepository) {
+    public CardatabaseApplication(CarRepository repository, OwnerRepository ownerRepository, AppUserRepository userRepository) {
         this.repository = repository;
 		this.ownerRepository = ownerRepository;
+		this.userRepository = userRepository;
     }  // 위에 필드와 이 생성자가 있어야 CarRepository의 메서드 사용 가능
+
+
 
     public static void main(String[] args) {
 		SpringApplication.run(CardatabaseApplication.class, args);
@@ -57,6 +58,13 @@ public class CardatabaseApplication implements CommandLineRunner {
 		for(Car car : repository.findAll()) {
 			logger.info("brand : {}, model : {}", car.getBrand(), car.getModel());   // 일종의 f-string
 		}
+
+		//AppUser 더미데이터 추가
+		// 저 위에 보시면 Owner에 경우에는 owner1 / owner2 만들어가지고 ownerRepository에 저장했었습니다.
+		// username : user / password : user
+		userRepository.save(new AppUser("user", "$2y$04$7XSGgfbTIwenxylkuDCGeez7ETZv3HGCZnYXa9rt01dD3FrXoVPni","USER"));
+		// username : admin / password : admin
+		userRepository.save(new AppUser("admin", "$2y$04$0yJEG6qW/Q/.03WfMjmSDOiKJR8zZsWRzamL6n9Jg4plwZ.o6gV8K", "ADMIN"));
 
 //		System.out.println(repository.findByBrand("Kia"));
 //		System.out.println(repository.findByColor("White"));

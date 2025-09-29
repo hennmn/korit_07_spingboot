@@ -20,7 +20,7 @@ public class AppUser {
     // 로그인 아이디 같은 거
     private final String username;
 
-    @Column(nullable = false)
+    @Column(nullable = false)  // 이게 일치하는 지 안 하는 지는 서비스 클래스
     private final String password;
 
     @Column(nullable = false)

@@ -21,9 +21,9 @@ public class Owner {
     private Long ownerId;
 
     @NonNull
-    private final String firstName;
+    private String firstName;
     @NonNull
-    private final String lastName;
+    private String lastName;
 
     // 소유자는 다수의 차들을 가질 수 있기 때문에 Collections를 사용
     @JsonIgnoreProperties  // 이 필드는 직렬화가 되지 않는다(JSON화 되지 않는다)  // Jackson에게 이 필드는 무시하라고 알려주는 애너테이션

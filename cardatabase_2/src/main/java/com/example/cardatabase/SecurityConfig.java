@@ -45,8 +45,9 @@ public class SecurityConfig {
         this.exceptionHandler = exceptionHandler;
     }
 
+    // 이 클래스 빈 등록 안 한 이유는 어차피 전역에서 굴러가는 거라서 굳이 bean 등록이 필요없음
     public void configGlobal(AuthenticationManagerBuilder auth) throws Exception{
-        auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());  // 두 개 서로 다름
+        auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
 
     }
 

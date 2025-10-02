@@ -44,11 +44,23 @@ public class OwnerService {
                     owner.setCars(ownerDetails.getCars());
                     owner.setLastName(ownerDetails.getLastName());      // Owner에 final이랑 @NonNull이랑 겹쳐 있으면 오류남(정확히는  final 때문에 오류남)
                     owner.setFirstName(ownerDetails.getFirstName());   // Owner에 final이랑 @NonNull이랑 겹쳐 있으면 오류남
-
                     return owner;
                 });
     }
 
+/*
+    Optional<Todo> todos = todoRepository.findById(id);
+        if(todos.isPresent()) {
+
+        }
+        return todos;
+
+        return todoRepository.findById(id)
+                .map(todo -> {
+                todo.setConent(content);
+                return todo;
+             });
+ */
 
 
     /*

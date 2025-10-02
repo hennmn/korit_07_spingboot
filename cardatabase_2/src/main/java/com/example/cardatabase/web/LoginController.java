@@ -38,8 +38,5 @@ public class LoginController {
                 .header(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "Authorization")
                 .build();  // .build()는 응답 body가 필요없을 때 사용  // HTTP 200 OK + 헤더만 있는 응답
 
-
-
-
     }
 }

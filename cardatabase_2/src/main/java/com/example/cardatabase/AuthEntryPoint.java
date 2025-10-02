@@ -17,7 +17,7 @@ public class AuthEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);// 인증 관련 요청을 보냈을 때 응답이 올 거니깐 그 상태 코드를 셋팅 해주겠다(권한이 없는 걸로 해주겠다.)
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);  // 이거 없으면 그냥 Raw로 나옴
         PrintWriter writer = response.getWriter();
         writer.println("Error : wrong id or password" + authException.getMessage());
     }

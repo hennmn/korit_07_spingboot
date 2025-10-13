@@ -1,18 +1,17 @@
-package com.example.todolist_project.domain;
+package com.todolist.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
+@NoArgsConstructor
 @Setter
 @Getter
-@NoArgsConstructor(force = true)
 @Entity
 public class Todo {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -20,9 +19,15 @@ public class Todo {
     @Column(nullable = false)
     private String content;
 
-    private boolean isCompleted;
+    private boolean isCompleted = false;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user")
-    private AppUser user;
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private User user;
+
+    public Todo(String content, User user) {
+        this.content = content;
+        this.user = user;
+    }
 }

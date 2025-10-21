@@ -63,30 +63,49 @@ public class SecurityConfig {
         return authConfig.getAuthenticationManager();
     }
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {   // 모든 요청에 대해서 허용하는 것으로 filterchain 변경
         http.csrf(csrf -> csrf.disable())
-                .cors(withDefaults())  // 여기 추가했습니다. 근데 static 메서드 추가하는 import문도 추가됨
-                .sessionManagement(sessionManagement ->
-                        sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .cors(withDefaults())
                 .authorizeHttpRequests(authorizeHttpRequests ->
-                        authorizeHttpRequests.requestMatchers(HttpMethod.POST, "/login").permitAll().anyRequest().authenticated())
-                .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling(exceptionHandling ->
-                        exceptionHandling.authenticationEntryPoint(exceptionHandler));
+                        authorizeHttpRequests.anyRequest().permitAll());
+
+//        http.csrf(csrf -> csrf.disable())
+//                .cors(withDefaults())  // 여기 추가했습니다. 근데 static 메서드 추가하는 import문도 추가됨
+//                .sessionManagement(sessionManagement ->
+//                        sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .authorizeHttpRequests(authorizeHttpRequests ->
+//                        authorizeHttpRequests.requestMatchers(HttpMethod.POST, "/login").permitAll().anyRequest().authenticated())
+//                .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
+//                .exceptionHandling(exceptionHandling ->
+//                        exceptionHandling.authenticationEntryPoint(exceptionHandler));
         return http.build();
     }
 
-    @Bean
-    public CorsConfigurationSource configurationSource() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(Arrays.asList("*"));  // 모든 http를 허용 한다는 뜻
-        config.setAllowedMethods(Arrays.asList("*"));
-        config.setAllowedHeaders(Arrays.asList("*"));
+//    @Bean
+//    public CorsConfigurationSource configurationSource() {
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        CorsConfiguration config = new CorsConfiguration();
+//        config.setAllowedOrigins(Arrays.asList("*"));  // 모든 http를 허용 한다는 뜻
+//        config.setAllowedMethods(Arrays.asList("*"));
+//        config.setAllowedHeaders(Arrays.asList("*"));
+//
+//        config.setAllowCredentials(false);
+//        config.applyPermitDefaultValues();
+//
+//        source.registerCorsConfiguration("/**", config);  // 모든 하위 폴더를 포함
+//        return source;
+//    }
 
-        config.setAllowCredentials(false);
-        config.applyPermitDefaultValues();
-        source.registerCorsConfiguration("/**", config);  // 모든 하위 폴더를 포함
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "http://localhost:5174")); // 배열 형태라 하나 정도 더 넣어도 노상관
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
         return source;
     }
 }

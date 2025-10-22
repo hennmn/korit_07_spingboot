@@ -64,20 +64,24 @@ public class SecurityConfig {
     }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {   // 모든 요청에 대해서 허용하는 것으로 filterchain 변경
-        http.csrf(csrf -> csrf.disable())
-                .cors(withDefaults())
-                .authorizeHttpRequests(authorizeHttpRequests ->
-                        authorizeHttpRequests.anyRequest().permitAll());
 
+
+        // 개발 중 로그인 포함 모든 HTTP 메서드 요청 허용
 //        http.csrf(csrf -> csrf.disable())
-//                .cors(withDefaults())  // 여기 추가했습니다. 근데 static 메서드 추가하는 import문도 추가됨
-//                .sessionManagement(sessionManagement ->
-//                        sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .cors(withDefaults())
 //                .authorizeHttpRequests(authorizeHttpRequests ->
-//                        authorizeHttpRequests.requestMatchers(HttpMethod.POST, "/login").permitAll().anyRequest().authenticated())
-//                .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
-//                .exceptionHandling(exceptionHandling ->
-//                        exceptionHandling.authenticationEntryPoint(exceptionHandler));
+//                        authorizeHttpRequests.anyRequest().permitAll());
+
+        // 로그인 엔드포인트 POST 요청 제외 나머지 인증 필요
+        http.csrf(csrf -> csrf.disable())
+                .cors(withDefaults())  // 여기 추가했습니다. 근데 static 메서드 추가하는 import문도 추가됨
+                .sessionManagement(sessionManagement ->
+                        sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(authorizeHttpRequests ->
+                        authorizeHttpRequests.requestMatchers(HttpMethod.POST, "/login").permitAll().anyRequest().authenticated())
+                .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling(exceptionHandling ->
+                        exceptionHandling.authenticationEntryPoint(exceptionHandler));
         return http.build();
     }
 

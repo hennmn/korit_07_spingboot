@@ -27,4 +27,5 @@ public class AppUser {
     private final String role;
     // Owner 에는 nonnull
 
+
 }

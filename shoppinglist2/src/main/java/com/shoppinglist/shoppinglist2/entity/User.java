@@ -1,4 +1,4 @@
-package com.example.shoppinglist.domain;
+package com.shoppinglist.shoppinglist2.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -10,13 +10,14 @@ import lombok.Setter;
 
 import java.util.List;
 
+
 @Entity
 @NoArgsConstructor(force = true)
 @RequiredArgsConstructor
 @Getter
 @Setter
 @Table(name = "users")
-public class AppUser {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, updatable = false)
@@ -32,19 +33,8 @@ public class AppUser {
     @Column(nullable = false)
     private final String role;
 
-
-
-    @JsonIgnoreProperties
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Shopping> shoppings;
-
-
+    // mappedBy = "user"  여기의 user은 실제 필드 이름
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
     @JsonIgnore
     private List<ShoppingItem> items;
-
-    // CommandLineRunner사에서 사용할 간단할 생성자 정의 하겠습니다.
-
-
-
 }
